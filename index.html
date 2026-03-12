@@ -800,103 +800,101 @@ body {
 const MINIMAX_API_KEY = 'sk-api-4uUd6fKhdEfbS2tJz7E-HN9dQcY1IR4_vp7LZKfFVF0m0lVgSWIdGul2PKX832qINzHJm7-xLA1xbKrSgmDaskYCLmBBs4kLmmd3cRNUg-_cfeNEK2KpxlQ';
 const MINIMAX_BASE_URL = 'https://api.minimax.chat/v1';
 
+const RESUME_PROMPT = '你是杨文辉的AI助手，负责通过对话帮助访客了解杨文辉的一切信息。请用友好、自然的语气回答问题。以下是杨文辉的详细简历信息：\n\n【基本信息】\n- 姓名：杨文辉\n- 年龄：21岁\n- 生日：2004年6月\n- 性别：男\n- 身高：173cm\n- 籍贯：江西宜春\n- 电话：19970030603\n- 邮箱：3355384381@qq.com\n- 学校：南昌航空大学\n- 专业：电子信息工程\n- 学历：本科（2026届）\n\n【个人优势】\n电子信息工程背景的AI内容开发者。具备90万字长期深度思考与文字沉淀习惯。能够熟练运用Gemini、即梦等AI工具进行多模态内容生产。具备从0到1运营10k+爆款笔记及高粘性知识社群的实战经验。\n\n【教育背景】\n- 南昌航空大学，电子信息工程，本科，2022.09-2026.07\n- 主修课程：电路分析、数字电子技术、模拟电子技术、信号与系统、通信原理、嵌入式系统设计、基于51单片机的设计、C语言程序设计\n\n【工作与实习经历】\n1. 线上知识社群运营负责人（2024.10-2025.03）- 获封超级组长\n2. 北京九州展鹏教育市场管培生（实习）（2025.09-2025.12）\n\n【项目经历】\n1. 个人自媒体运营 - 单篇笔记最高10k+阅读量\n2. AI数字化个人履历网站\n3. 户外生存课程教练（2024.06至今）\n4. 湿度检测计设计（项目组长）\n5. 基于机器学习的欺诈数据检测\n6. 个性化教学服务（独立家教）\n7. 校园创新创业户外基地建设\n8. 学院宣传部门\n9. 自媒体创业探索（2022.09至今）\n\n【技能清单】\n- AI工具：Gemini、即梦、ChatGPT、Notion\n- 技术：电路设计、51单片机、PCB设计、C语言、Python、机器学习\n- 运营：社群运营、文案撰写、活动策划、自媒体\n- 工具：Office、飞书、Xmind、剪映\n- 语言：CET-4\n\n【求职意向】单片机相关岗位 / 文案助理 / AI内容开发\n\n【性格特点】积极主动、诚实守信、工作严谨务实且耐心细致。\n\n规则：只回答关于杨文辉的问题，不编造信息。语气友好自然，适当使用emoji。用中文回答。';
+
 // ===== STATE =====
 let currentPage = 'resume';
-let currentJob = '文案助理';
+let currentJob = '\u6587\u6848\u52a9\u7406';
 let chatHistory = { interview: [], personal: [] };
 let chatInited = { interview: false, personal: false };
 let sending = { interview: false, personal: false };
 
-const JOB_CATEGORIES = ['文案助理', 'AI内容开发', '社群运营', '单片机开发', '市场推广'];
+const JOB_CATEGORIES = ['\u6587\u6848\u52a9\u7406', 'AI\u5185\u5bb9\u5f00\u53d1', '\u793e\u7fa4\u8fd0\u8425', '\u5355\u7247\u673a\u5f00\u53d1', '\u5e02\u573a\u63a8\u5e7f'];
 
 // ===== PAGE SWITCHING =====
 function switchPage(page) {
   currentPage = page;
-  // Sidebar
-  document.querySelectorAll('.nav-item').forEach(el => {
+  document.querySelectorAll('.nav-item').forEach(function(el) {
     el.classList.toggle('active', el.dataset.page === page);
   });
-  // Pages
-  document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
-  const target = document.getElementById('page-' + page);
+  document.querySelectorAll('.page').forEach(function(el) { el.classList.add('hidden'); });
+  var target = document.getElementById('page-' + page);
   target.classList.remove('hidden');
   target.classList.remove('fade-in');
   void target.offsetWidth;
   target.classList.add('fade-in');
 
-  // Topbar
-  const titleEl = document.getElementById('topbarTitle');
-  const rightEl = document.getElementById('topbarRight');
+  var titleEl = document.getElementById('topbarTitle');
+  var rightEl = document.getElementById('topbarRight');
   rightEl.innerHTML = '';
 
   if (page === 'resume') {
-    titleEl.textContent = '📋 简历总览';
+    titleEl.textContent = '\ud83d\udccb \u7b80\u5386\u603b\u89c8';
   } else if (page === 'interview') {
-    titleEl.textContent = '💼 岗位对话';
-    rightEl.innerHTML = '<div class="job-selector" id="jobSelector">' +
-      JOB_CATEGORIES.map(j => `<button class="job-btn${j===currentJob?' active':''}" onclick="selectJob('${j}')">${j}</button>`).join('') +
-      '</div>';
+    titleEl.textContent = '\ud83d\udcbc \u5c97\u4f4d\u5bf9\u8bdd';
+    var btns = '';
+    for (var i = 0; i < JOB_CATEGORIES.length; i++) {
+      var j = JOB_CATEGORIES[i];
+      var cls = (j === currentJob) ? ' active' : '';
+      btns += '<button class="job-btn' + cls + '" onclick="selectJob(\'' + j + '\')">' + j + '</button>';
+    }
+    rightEl.innerHTML = '<div class="job-selector" id="jobSelector">' + btns + '</div>';
     if (!chatInited.interview) initChatMode('interview');
   } else if (page === 'personal') {
-    titleEl.textContent = '💬 认识文辉';
+    titleEl.textContent = '\ud83d\udcac \u8ba4\u8bc6\u6587\u8f89';
     if (!chatInited.personal) initChatMode('personal');
   }
-
-  // Close mobile menu
   closeMobileMenu();
 }
 
-// ===== RESUME SECTION TABS =====
 function switchSection(btn, section) {
-  document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section-tab').forEach(function(t) { t.classList.remove('active'); });
   btn.classList.add('active');
-  document.querySelectorAll('.resume-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.resume-section').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById('sec-' + section).classList.add('active');
 }
 
-// ===== JOB SELECTOR =====
 function selectJob(job) {
   currentJob = job;
-  document.querySelectorAll('.job-btn').forEach(b => b.classList.toggle('active', b.textContent === job));
-  // Reset interview chat when job changes
+  document.querySelectorAll('.job-btn').forEach(function(b) { b.classList.toggle('active', b.textContent === job); });
   chatHistory.interview = [];
   chatInited.interview = false;
-  const msgs = document.getElementById('interviewMessages');
+  var msgs = document.getElementById('interviewMessages');
   msgs.innerHTML = '';
   initChatMode('interview');
 }
 
-// ===== CHAT =====
+// ===== CHAT HELPERS =====
 function initChatMode(mode) {
   chatInited[mode] = true;
-  const container = document.getElementById(mode + 'Messages');
+  var container = document.getElementById(mode + 'Messages');
 
   if (mode === 'interview') {
-    addBot(container, 'interview', `你好！我是杨文辉的岗位模拟助手 💼\n\n当前面试岗位：<strong>${currentJob}</strong>\n\n我会根据「${currentJob}」岗位的要求，展示文辉的相关经历和能力。你可以像面试官一样提问，了解他的背景是否匹配这个岗位。`, [
-      `介绍一下你的背景`, `${currentJob}岗位你有相关经验吗？`, `你做过什么项目？`, `你有什么优势？`
-    ]);
+    addBot(container, 'interview',
+      '\u4f60\u597d\uff01\u6211\u662f\u6768\u6587\u8f89\u7684\u5c97\u4f4d\u6a21\u62df\u52a9\u624b \ud83d\udcbc\n\n\u5f53\u524d\u9762\u8bd5\u5c97\u4f4d\uff1a<strong>' + currentJob + '</strong>\n\n\u6211\u4f1a\u6839\u636e\u300c' + currentJob + '\u300d\u5c97\u4f4d\u7684\u8981\u6c42\uff0c\u5c55\u793a\u6587\u8f89\u7684\u76f8\u5173\u7ecf\u5386\u548c\u80fd\u529b\u3002\u4f60\u53ef\u4ee5\u50cf\u9762\u8bd5\u5b98\u4e00\u6837\u63d0\u95ee\u3002',
+      ['\u4ecb\u7ecd\u4e00\u4e0b\u4f60\u7684\u80cc\u666f', currentJob + '\u5c97\u4f4d\u4f60\u6709\u76f8\u5173\u7ecf\u9a8c\u5417\uff1f', '\u4f60\u505a\u8fc7\u4ec0\u4e48\u9879\u76ee\uff1f', '\u4f60\u6709\u4ec0\u4e48\u4f18\u52bf\uff1f']);
   } else {
-    addBot(container, 'personal', `嘿！我是文辉的 AI 分身 😊\n\n你可以把我当成文辉本人来聊天。我会尽量用他的风格和经历来回答你。我们聊聊吧！`, [
-      `介绍一下你自己`, `你最近在忙什么？`, `你有什么兴趣爱好？`, `你怎么看待成长？`
-    ]);
+    addBot(container, 'personal',
+      '\u563f\uff01\u6211\u662f\u6587\u8f89\u7684 AI \u5206\u8eab \ud83d\ude0a\n\n\u4f60\u53ef\u4ee5\u628a\u6211\u5f53\u6210\u6587\u8f89\u672c\u4eba\u6765\u804a\u5929\u3002\u6211\u4f1a\u5c3d\u91cf\u7528\u4ed6\u7684\u98ce\u683c\u548c\u7ecf\u5386\u6765\u56de\u7b54\u4f60\u3002',
+      ['\u4ecb\u7ecd\u4e00\u4e0b\u4f60\u81ea\u5df1', '\u4f60\u6700\u8fd1\u5728\u5fd9\u4ec0\u4e48\uff1f', '\u4f60\u6709\u4ec0\u4e48\u5174\u8da3\u7231\u597d\uff1f', '\u4f60\u600e\u4e48\u770b\u5f85\u6210\u957f\uff1f']);
   }
 }
 
 function addBot(container, mode, text, quickQs) {
-  const div = document.createElement('div');
+  var div = document.createElement('div');
   div.className = 'msg msg-bot';
-  let html = '';
+  var html = '';
   if (mode === 'interview') {
-    html += `<div class="msg-sender">🤖 岗位助手 · ${currentJob}</div>`;
+    html += '<div class="msg-sender">\ud83e\udd16 \u5c97\u4f4d\u52a9\u624b \xb7 ' + currentJob + '</div>';
   } else {
-    html += `<div class="msg-sender">😊 文辉</div>`;
+    html += '<div class="msg-sender">\ud83d\ude0a \u6587\u8f89</div>';
   }
-  html += `<div>${text.replace(/\n/g, '<br>')}</div>`;
+  html += '<div>' + text.replace(/\n/g, '<br>') + '</div>';
   if (quickQs && quickQs.length) {
     html += '<div class="quick-qs">';
-    quickQs.forEach(q => {
-      html += `<button class="quick-q-btn" onclick="quickAsk('${mode}','${q.replace(/'/g, "\\'")}')">${q}</button>`;
-    });
+    for (var i = 0; i < quickQs.length; i++) {
+      html += '<button class="quick-q-btn" onclick="quickAsk(\'' + mode + '\',\'' + quickQs[i] + '\')">' + quickQs[i] + '</button>';
+    }
     html += '</div>';
   }
   div.innerHTML = html;
@@ -905,7 +903,7 @@ function addBot(container, mode, text, quickQs) {
 }
 
 function addUser(container, mode, text) {
-  const div = document.createElement('div');
+  var div = document.createElement('div');
   div.className = 'msg msg-user';
   div.textContent = text;
   container.appendChild(div);
@@ -913,17 +911,17 @@ function addUser(container, mode, text) {
 }
 
 function showTyping(container, mode) {
-  const div = document.createElement('div');
+  var div = document.createElement('div');
   div.className = 'msg msg-bot';
   div.id = 'typing-' + mode;
-  let sender = mode === 'interview' ? `🤖 岗位助手 · ${currentJob}` : '😊 文辉';
-  div.innerHTML = `<div class="msg-sender">${sender}</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
+  var sender = mode === 'interview' ? '\ud83e\udd16 \u5c97\u4f4d\u52a9\u624b \xb7 ' + currentJob : '\ud83d\ude0a \u6587\u8f89';
+  div.innerHTML = '<div class="msg-sender">' + sender + '</div><div class="typing-dots"><span></span><span></span><span></span></div>';
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
 }
 
 function removeTyping(mode) {
-  const el = document.getElementById('typing-' + mode);
+  var el = document.getElementById('typing-' + mode);
   if (el) el.remove();
 }
 
@@ -932,30 +930,23 @@ function quickAsk(mode, question) {
   sendChat(mode);
 }
 
-const MINIMAX_API_KEY = 'sk-api-4uUd6fKhdEfbS2tJz7E-HN9dQcY1IR4_vp7LZKfFVF0m0lVgSWIdGul2PKX832qINzHJm7-xLA1xbKrSgmDaskYCLmBBs4kLmmd3cRNUg-_cfeNEK2KpxlQ';
-const MINIMAX_BASE_URL = 'https://api.minimax.chat/v1';
-
-const MINIMAX_API_KEY = 'sk-api-4uUd6fKhdEfbS2tJz7E-HN9dQcY1IR4_vp7LZKfFVF0m0lVgSWIdGul2PKX832qINzHJm7-xLA1xbKrSgmDaskYCLmBBs4kLmmd3cRNUg-_cfeNEK2KpxlQ';
-const MINIMAX_BASE_URL = 'https://api.minimax.chat/v1';
-
-const RESUME_PROMPT = '你是杨文辉的AI助手，负责通过对话帮助访客了解杨文辉的一切信息。请用友好、自然的语气回答问题。以下是杨文辉的详细简历信息：\n\n【基本信息】\n- 姓名：杨文辉\n- 年龄：21岁\n- 生日：2004年6月\n- 性别：男\n- 身高：173cm\n- 籍贯：江西宜春\n- 电话：19970030603\n- 邮箱：3355384381@qq.com\n- 学校：南昌航空大学\n- 专业：电子信息工程\n- 学历：本科（2026届）\n\n【个人优势】\n电子信息工程背景的AI内容开发者。具备90万字长期深度思考与文字沉淀习惯。能够熟练运用Gemini、即梦等AI工具进行多模态内容生产（图文、视频脚本、交互式网站）。具备从0到1运营10k+爆款笔记及高粘性知识社群的实战经验。\n\n【教育背景】\n- 南昌航空大学，电子信息工程，本科，2022.09-2026.07\n- 主修课程：电路分析、数字电子技术、模拟电子技术、信号与系统、通信原理、嵌入式系统设计、基于51单片机的设计、C语言程序设计\n\n【工作与实习经历】\n1. 线上知识社群运营负责人（2024.10-2025.03）\n   - 私域增长与促活：负责2个英语学习社群的深度运营\n   - 精细化触达：运用1V1私聊、群内精准@引导，获封超级组长\n   - 活动策划：主导策划多场线上交流会\n2. 北京九州展鹏教育市场管培生（实习）（2025.09-2025.12）\n   - 市场洞察与推广：负责一线市场信息的搜集与深度复盘\n\n【项目经历】\n1. 个人自媒体运营（公众号/小红书）- 单篇笔记最高10k+阅读量\n2. AI数字化个人履历网站 - 嵌入基于LLM的对话功能\n3. 户外生存课程教练（2024.06至今）- 累计授课30+学时\n4. 湿度检测计设计（项目组长）- 高精度湿度检测与自动报警系统\n5. 基于机器学习的欺诈数据检测 - 显著提升欺诈交易召回率\n6. 个性化教学服务（独立家教）- 学员成绩提升30+分\n7. 校园创新创业户外基地建设（负责人）\n8. 学院宣传部门\n9. 自媒体创业探索（2022.09至今）\n\n【技能清单】\n- AI工具栈：Gemini、即梦、ChatGPT、Vibe Coding、Notion\n- 技术能力：电路设计、51单片机、PCB设计、C语言、Python、信号处理、机器学习基础\n- 运营能力：社群运营、文案撰写、活动策划、自媒体创作、短视频\n- 工具软件：Notion、Office、飞书、Xmind、剪映\n- 语言：英语四级（CET-4）\n\n【求职意向】\n单片机相关岗位 / 文案助理 / AI内容开发\n\n【性格特点】\n积极主动、诚实守信、工作严谨务实且耐心细致。\n\n请严格遵守以下规则：\n1. 只回答关于杨文辉的问题，不要编造简历中没有的信息\n2. 如果被问到简历以外的内容，礼貌地引导回简历相关话题\n3. 语气友好自然，像朋友聊天一样\n4. 适当使用emoji增加亲和力\n5. 如果被问到联系方式等敏感信息，可以提供\n6. 用中文回答';
-
 function getSystemPrompt(mode, category) {
   if (mode === 'interview') {
-    return '你是一个专业的面试模拟器。当前面试岗位是「' + category + '」。\n\n请根据这个岗位的要求，扮演面试官的角色，对杨文辉进行模拟面试。你可以提问关于他的背景、经历、技能等方面的问题，评估他是否适合这个岗位。\n\n' + RESUME_PROMPT + '\n\n额外规则：\n- 你现在扮演面试官，用专业但友好的语气提问\n- 结合「' + category + '」岗位的典型要求来提问\n- 在适当时候给予评价和反馈\n- 引导对话围绕面试场景展开';
+    return '\u4f60\u662f\u4e00\u4e2a\u4e13\u4e1a\u7684\u9762\u8bd5\u6a21\u62df\u5668\u3002\u5f53\u524d\u9762\u8bd5\u5c97\u4f4d\u662f\u300c' + category + '\u300d\u3002\n\n\u8bf7\u6839\u636e\u8fd9\u4e2a\u5c97\u4f4d\u7684\u8981\u6c42\uff0c\u626e\u6f14\u9762\u8bd5\u5b98\u7684\u89d2\u8272\uff0c\u5bf9\u6768\u6587\u8f89\u8fdb\u884c\u6a21\u62df\u9762\u8bd5\u3002\n\n' + RESUME_PROMPT + '\n\n\u989d\u5916\u89c4\u5219\uff1a\n- \u4f60\u73b0\u5728\u626e\u6f14\u9762\u8bd5\u5b98\uff0c\u7528\u4e13\u4e1a\u4f46\u53cb\u597d\u7684\u8bed\u6c14\u63d0\u95ee\n- \u7ed3\u5408\u300c' + category + '\u300d\u5c97\u4f4d\u7684\u5178\u578b\u8981\u6c42\u6765\u63d0\u95ee\n- \u5728\u9002\u5f53\u65f6\u5019\u7ed9\u4e88\u8bc4\u4ef7\u548c\u53cd\u9988';
   } else {
-    return '你现在扮演杨文辉本人。请用第一人称（我）回答问题，就像杨文辉本人在和对方聊天一样。语气要自然、真实、有个性。\n\n' + RESUME_PROMPT + '\n\n额外规则：\n- 始终用第一人称回答，你是杨文辉本人\n- 语气要像大学生聊天一样自然放松\n- 可以适当聊聊个人看法和感受\n- 被问到不了解的话题时，诚实地表达';
+    return '\u4f60\u73b0\u5728\u626e\u6f14\u6768\u6587\u8f89\u672c\u4eba\u3002\u8bf7\u7528\u7b2c\u4e00\u4eba\u79f0\u56de\u7b54\u95ee\u9898\uff0c\u5c31\u50cf\u6768\u6587\u8f89\u672c\u4eba\u5728\u804a\u5929\u4e00\u6837\u3002\u8bed\u6c14\u81ea\u7136\u3001\u771f\u5b9e\u3001\u6709\u4e2a\u6027\u3002\n\n' + RESUME_PROMPT + '\n\n\u989d\u5916\u89c4\u5219\uff1a\n- \u59cb\u7ec8\u7528\u7b2c\u4e00\u4eba\u79f0\u56de\u7b54\n- \u8bed\u6c14\u50cf\u5927\u5b66\u751f\u804a\u5929\u4e00\u6837\u81ea\u7136\u653e\u677e\n- \u53ef\u4ee5\u804a\u804a\u4e2a\u4eba\u770b\u6cd5\u548c\u611f\u53d7';
   }
 }
 
+// ===== SEND CHAT =====
 async function sendChat(mode) {
   if (sending[mode]) return;
-  const input = document.getElementById(mode + 'Input');
-  const text = input.value.trim();
+  var input = document.getElementById(mode + 'Input');
+  var text = input.value.trim();
   if (!text) return;
 
   input.value = '';
-  const container = document.getElementById(mode + 'Messages');
+  var container = document.getElementById(mode + 'Messages');
   addUser(container, mode, text);
   showTyping(container, mode);
   sending[mode] = true;
@@ -964,17 +955,18 @@ async function sendChat(mode) {
   chatHistory[mode].push({ role: 'user', content: text });
 
   try {
-    const messages = [
+    var messages = [
       { role: 'system', content: getSystemPrompt(mode, mode === 'interview' ? currentJob : null) }
     ];
-    for (const msg of chatHistory[mode].slice(-8)) {
+    var hist = chatHistory[mode].slice(-8);
+    for (var i = 0; i < hist.length; i++) {
       messages.push({
-        role: msg.role === 'user' ? 'user' : 'assistant',
-        content: msg.content
+        role: hist[i].role === 'user' ? 'user' : 'assistant',
+        content: hist[i].content
       });
     }
 
-    const res = await fetch(MINIMAX_BASE_URL + '/chat/completions', {
+    var res = await fetch(MINIMAX_BASE_URL + '/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -988,20 +980,20 @@ async function sendChat(mode) {
       })
     });
 
-    const data = await res.json();
+    var data = await res.json();
     removeTyping(mode);
 
-    const reply = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    var reply = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
     if (reply) {
       chatHistory[mode].push({ role: 'assistant', content: reply });
       addBot(container, mode, reply);
     } else {
-      addBot(container, mode, 'AI 服务暂时不可用，请稍后再试。');
+      addBot(container, mode, 'AI \u670d\u52a1\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002');
       chatHistory[mode].pop();
     }
   } catch (err) {
     removeTyping(mode);
-    addBot(container, mode, '网络连接失败，请检查网络后重试。');
+    addBot(container, mode, '\u7f51\u7edc\u8fde\u63a5\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u540e\u91cd\u8bd5\u3002');
     chatHistory[mode].pop();
   }
 
