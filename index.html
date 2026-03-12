@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杨文辉 | 个人简历</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --card: #16161f;
+  --border: #2a2a3a;
+  --fg: #e8e6e3;
+  --fg-muted: #8a8a9a;
+  --accent: #e8c547;
+  --accent2: #f0d960;
+  --accent-dim: rgba(232, 197, 71, 0.1);
+  --radius: 16px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ===== BACKGROUND ===== */
+.bg-glow {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+.bg-glow::before {
+  content: ''; position: absolute;
+  top: -20%; left: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,197,71,0.06) 0%, transparent 70%);
+  animation: float1 20s ease-in-out infinite;
+}
+.bg-glow::after {
+  content: ''; position: absolute;
+  bottom: -20%; right: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(100,100,255,0.04) 0%, transparent 70%);
+  animation: float2 25s ease-in-out infinite;
+}
+@keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(80px,60px)} }
+@keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-60px,-80px)} }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,15,0.8);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-brand {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 1.1rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  color: var(--fg-muted); text-decoration: none;
+  font-size: 0.88rem; font-weight: 400;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.mode-toggle {
+  background: var(--accent-dim);
+  border: 1px solid rgba(232,197,71,0.3);
+  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+.mode-toggle:hover {
+  background: rgba(232,197,71,0.2);
+  border-color: var(--accent);
+}
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+  position: relative; z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 2rem 4rem;
+}
+
+/* ===== BROWSE MODE ===== */
+#browse-mode { animation: fadeUp 0.6s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* HERO */
+.hero {
+  display: flex; gap: 3rem; align-items: flex-start;
+  padding: 3rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+.hero-avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #d4a030);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 2.8rem; font-weight: 900;
+  color: var(--bg);
+  flex-shrink: 0;
+  box-shadow: 0 0 40px rgba(232,197,71,0.15);
+}
+.hero-info { flex: 1; }
+.hero-info h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 2.8rem; font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+}
+.hero-info .tagline {
+  font-size: 1.1rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+.hero-contact {
+  display: flex; flex-wrap: wrap; gap: 1.5rem;
+}
+.hero-contact span {
+  font-size: 0.88rem; color: var(--fg-muted);
+  display: flex; align-items: center; gap: 6px;
+}
+.hero-contact .icon {
+  width: 16px; height: 16px; opacity: 0.6;
+}
+
+/* SECTIONS */
+.section { margin-bottom: 3rem; }
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.5rem; font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-title::before {
+  content: '';
+  width: 4px; height: 24px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 7px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.timeline-item:hover {
+  border-color: rgba(232,197,71,0.3);
+  transform: translateX(4px);
+}
+.timeline-item::before {
+  content: '';
+  position: absolute; left: -1.55rem; top: 1.8rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg);
+}
+.timeline-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.timeline-header h3 {
+  font-size: 1.1rem; font-weight: 700;
+}
+.timeline-header .role {
+  font-size: 0.85rem; color: var(--accent);
+  font-weight: 500;
+}
+.timeline-header .time {
+  font-size: 0.82rem; color: var(--fg-muted);
+  font-weight: 300;
+}
+.timeline-body {
+  font-size: 0.92rem; color: var(--fg-muted);
+  line-height: 1.8;
+}
+.timeline-body ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+.timeline-body li { margin-bottom: 0.3rem; }
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+}
+.skill-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: border-color 0.3s;
+}
+.skill-card:hover { border-color: rgba(232,197,71,0.3); }
+.skill-card h4 {
+  font-size: 0.95rem; font-weight: 600;
+  margin-bottom: 0.8rem; color: var(--fg);
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+  background: var(--accent-dim);
+  color: var(--accent2);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1px solid rgba(232,197,71,0.15);
+}
+
+/* ABOUT */
+.about-text {
+  font-size: 1rem; color: var(--fg-muted);
+  line-height: 2;
+  max-width: 800px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  color: var(--fg-muted);
+  font-size: 0.82rem;
+}
+
+/* ===== CHAT MODE ===== */
+#chat-mode { display: none; animation: fadeUp 0.4s ease; }
+.chat-container {
+  display: flex; flex-direction: column;
+  height: calc(100vh - 164px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.chat-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.chat-header .dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.chat-header span { font-size: 0.95rem; font-weight: 500; }
+
+.chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg {
+  max-width: 80%;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  animation: msgIn 0.3s ease;
+}
+@keyframes msgIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+.msg-bot {
+  align-self: flex-start;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+}
+.msg-user {
+  align-self: flex-end;
+  background: rgba(232,197,71,0.12);
+  border: 1px solid rgba(232,197,71,0.2);
+  color: var(--fg);
+}
+.msg-bot .sender {
+  font-size: 0.75rem; color: var(--accent);
+  font-weight: 600; margin-bottom: 6px;
+}
+.typing {
+  display: flex; gap: 4px; padding: 0.5rem;
+}
+.typing span {
+  width: 6px; height: 6px;
+  background: var(--fg-muted);
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite;
+}
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} }
+
+.chat-input-area {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 10px;
+}
+.chat-input-area input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 12px 18px;
+  border-radius: 24px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.chat-input-area input:focus { border-color: var(--accent); }
+.chat-input-area input::placeholder { color: var(--fg-muted); }
+.chat-send {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.chat-send:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(232,197,71,0.3);
+}
+
+/* QUICK QUESTIONS */
+.quick-q {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 8px;
+}
+.quick-q button {
+  background: var(--accent-dim);
+  border: 1px solid rgba(232,197,71,0.2);
+  color: var(--accent2);
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quick-q button:hover {
+  background: rgba(232,197,71,0.2);
+  border-color: var(--accent);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero { flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+  .hero-contact { justify-content: center; }
+  .hero-info h1 { font-size: 2rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.8rem; }
+  .container { padding: 80px 1rem 3rem; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .msg { max-width: 92%; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav>
+  <div class="nav-brand">杨文辉</div>
+  <div class="nav-links">
+    <a onclick="scrollToSection('about')" class="active" id="nav-about">关于我</a>
+    <a onclick="scrollToSection('education')">教育背景</a>
+    <a onclick="scrollToSection('experience')">经历</a>
+    <a onclick="scrollToSection('skills')">技能</a>
+    <button class="mode-toggle" onclick="toggleMode()">💬 对话模式</button>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ===== BROWSE MODE ===== -->
+<div id="browse-mode">
+
+  <div class="hero">
+    <div class="hero-avatar">文辉</div>
+    <div class="hero-info">
+      <h1>杨文辉</h1>
+      <div class="tagline">电子信息工程 · 2026届本科 · 南昌航空大学</div>
+      <div class="hero-contact">
+        <span>📱 19970030603</span>
+        <span>📧 3355384381@qq.com</span>
+        <span>📍 江西宜春</span>
+        <span>🎂 2004年6月</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="about">
+    <h2 class="section-title">关于我</h2>
+    <p class="about-text">
+      我是一名积极主动、具备出色项目执行与线上运营能力的应届毕业生。就读于南昌航空大学电子信息工程专业，拥有硬件开发与软件实践的双重经验。
+      <br><br>
+      在技术方面，我掌握了单片机开发、电路设计、机器学习基础等技术能力；在运营方面，我有社群运营、自媒体创作、活动策划等实战经验。
+      <br><br>
+      我具备快速学习和适应新环境的能力，善于将想法付诸实践，期待在一个充满机会的平台，为团队创造切实价值。
+    </p>
+  </div>
+
+  <div class="section" id="education">
+    <h2 class="section-title">教育背景</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>南昌航空大学</h3>
+            <div class="role">电子信息工程 · 本科</div>
+          </div>
+          <div class="time">2022.09 - 2026.07</div>
+        </div>
+        <div class="timeline-body">
+          <strong>主修课程：</strong>电路分析、数字电子技术、模拟电子技术、信号与系统、通信原理、嵌入式系统设计、基于51单片机的设计、C语言程序设计
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="experience">
+    <h2 class="section-title">项目 & 实习经历</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>户外生存课程教练</h3>
+            <div class="role">实习</div>
+          </div>
+          <div class="time">2024.06 - 至今</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>参与设计并实施户外生存训练课程，累计授课 30+ 学时，0 安全事故记录</li>
+            <li>参与设计并举办 5 次户外活动，服务超 200+ 成员</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>线上知识社群运营</h3>
+            <div class="role">运营负责人</div>
+          </div>
+          <div class="time">2024.10 - 2025.03</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>运营 2 个英语学习类社群（总成员 50+），策划每周主题讨论活动</li>
+            <li>主导多项破冰学习计划，带动社群活跃度显著提升，荣获「超级组长」称号</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>湿度检测计设计</h3>
+            <div class="role">项目组长</div>
+          </div>
+          <div class="time">2024.09 - 2025.10</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>负责设计安装湿度检测计的硬件电路和整个项目的逻辑程序</li>
+            <li>涉及模拟电子电路设计、PCB 设计、湿度传感等多个方面</li>
+            <li>实现了高精度、高稳定性的湿度检测与自动报警系统</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>基于机器学习的欺诈数据检测</h3>
+            <div class="role">独立开发</div>
+          </div>
+          <div class="time">2025.06 - 2025.07</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>利用 Python 实现欺诈行为自动识别，通过 SMOTE 过采样解决样本不平衡问题</li>
+            <li>对比逻辑回归与随机森林等分类模型，优化特征工程</li>
+            <li>显著提升了模型对欺诈交易的召回率（Recall），实现高准确度风险预警</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>个性化教学服务</h3>
+            <div class="role">独立家教</div>
+          </div>
+          <div class="time">2023.07 / 2024.07</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>定制小升初教学方案，2 名学员中考成绩提升 30+ 分</li>
+            <li>定制高二升学教学方案，得到学员和家长的一致好评</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>校园创新创业户外基地建设项目</h3>
+            <div class="role">负责人</div>
+          </div>
+          <div class="time">2023.09 - 2024.02</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>组建 6 人跨专业团队，成功进行户外生存课程的开发和实践</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>北京九州展鹏教育科技 · 管培生</h3>
+            <div class="role">实习</div>
+          </div>
+          <div class="time">2024.09 - 2025.01</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>负责市场信息的搜集与整理，协助团队制定推广计划</li>
+            <li>协助处理日常行政事务及客户沟通，锻炼了良好的抗压能力和人际沟通技巧</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>自媒体 & 创业探索</h3>
+            <div class="role">个人项目</div>
+          </div>
+          <div class="time">2022.09 - 至今</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>拥有自媒体、公众号、短视频创作经验，持续输出塑造个人 IP</li>
+            <li>线上流量与变现模式探索：引流、信息差售卖、二手资料售卖等</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <h3>学院宣传部门</h3>
+            <div class="role">部门成员</div>
+          </div>
+          <div class="time">2022.09 - 2023.06</div>
+        </div>
+        <div class="timeline-body">
+          <ul>
+            <li>负责学院宣传事宜：海报制作、账号运营、文案撰写、方案设计</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section" id="skills">
+    <h2 class="section-title">技能 & 证书</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>🔧 技术能力</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">电路设计</span>
+          <span class="skill-tag">51单片机</span>
+          <span class="skill-tag">PCB设计</span>
+          <span class="skill-tag">C语言</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">信号处理</span>
+          <span class="skill-tag">机器学习基础</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>📊 运营 & 创意</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">社群运营</span>
+          <span class="skill-tag">文案撰写</span>
+          <span class="skill-tag">活动策划</span>
+          <span class="skill-tag">自媒体创作</span>
+          <span class="skill-tag">海报设计</span>
+          <span class="skill-tag">短视频</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>🛠 工具 & 软件</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Office</span>
+          <span class="skill-tag">飞书</span>
+          <span class="skill-tag">ChatGPT</span>
+          <span class="skill-tag">AI工具</span>
+          <span class="skill-tag">公众号</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>🗣 语言</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">CET-4</span>
+          <span class="skill-tag">英语阅读</span>
+          <span class="skill-tag">中文</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 杨文辉 · 南昌航空大学 · 电子信息工程
+  </div>
+</div>
+
+<!-- ===== CHAT MODE ===== -->
+<div id="chat-mode">
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="dot"></div>
+      <span>和文辉聊聊吧 ✨ 随便问我任何关于他的问题</span>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <!-- Initial bot message -->
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="问我任何关于杨文辉的问题..." onkeypress="if(event.key==='Enter')sendMessage()">
+      <button class="chat-send" onclick="sendMessage()">→</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const profile = {
+  name: "杨文辉",
+  age: 21,
+  birth: "2004年6月",
+  university: "南昌航空大学",
+  major: "电子信息工程",
+  degree: "本科",
+  grad: "2026届",
+  phone: "19970030603",
+  email: "3355384381@qq.com",
+  hometown: "江西宜春",
+  height: "173cm",
+  gender: "男",
+  target: "单片机相关岗位 / 文案助理",
+  skills: ["电路设计", "51单片机", "PCB设计", "C语言", "Python", "机器学习", "社群运营", "文案撰写", "活动策划", "自媒体"],
+  certs: "CET-4",
+  tools: "Office、飞书、ChatGPT等AI工具",
+  courses: "电路分析、数字电子技术、模拟电子技术、信号与系统、通信原理、嵌入式系统设计、51单片机设计、C语言程序设计"
+};
+
+const knowledge = [
+  {
+    keywords: ["你好", "嗨", "hello", "hi", "你是谁", "介绍"],
+    answer: "你好！我是杨文辉，南昌航空大学电子信息工程专业的2026届本科生。我兴趣广泛，既喜欢硬件开发（单片机、电路设计），也热衷于运营和内容创作。很高兴认识你！有什么想了解的尽管问 😊"
+  },
+  {
+    keywords: ["学校", "大学", "专业", "学历"],
+    answer: `我本科就读于<b>南昌航空大学</b>，专业是<b>电子信息工程</b>，2026年毕业。主修课程包括电路分析、数字电子技术、信号与系统、通信原理、嵌入式系统设计、基于51单片机的设计等。`
+  },
+  {
+    keywords: ["技能", "会什么", "技术", "能力"],
+    answer: `我的技能主要分为几块：<br><br>🔹 <b>技术能力</b>：电路设计、51单片机开发、PCB设计、C语言、Python、机器学习基础<br>🔹 <b>运营能力</b>：社群运营、文案撰写、活动策划、自媒体创作<br>🔹 <b>工具</b>：Office、飞书、ChatGPT等AI工具<br>🔹 <b>语言</b>：CET-4，可以阅读英文专业资料`
+  },
+  {
+    keywords: ["项目", "经历", "实习", "做过什么"],
+    answer: `我参与了不少项目：<br><br>🔹 <b>户外生存课程教练</b>（2024.06至今）：累计授课30+学时，举办5次户外活动，服务200+成员<br>🔹 <b>线上知识社群运营</b>（2024.10-2025.03）：运营50+人英语学习社群，获「超级组长」称号<br>🔹 <b>湿度检测计设计</b>（项目组长）：硬件电路+逻辑程序，实现高精度湿度检测报警系统<br>🔹 <b>机器学习欺诈检测</b>：用Python实现，SMOTE过采样+特征工程优化<br>🔹 <b>个性化家教</b>：学员成绩提升30+分<br>🔹 <b>自媒体创业探索</b>：公众号、短视频、流量变现`
+  },
+  {
+    keywords: ["单片机", "硬件", "电路", "嵌入式"],
+    answer: `我对单片机和硬件开发很有热情。在校期间主修了基于51单片机的设计、嵌入式系统设计等课程。我的毕业项目是<b>湿度检测计设计</b>，担任项目组长，负责硬件电路设计和逻辑程序编写，涉及模拟电路设计、PCB设计、传感器等多个方面，最终实现了高精度高稳定性的检测系统。`
+  },
+  {
+    keywords: ["机器学习", "AI", "Python", "欺诈"],
+    answer: `2025年我独立完成了一个<b>基于机器学习的欺诈数据检测</b>项目。使用Python开发，通过SMOTE过采样解决了样本极度不平衡的问题，对比了逻辑回归和随机森林等分类模型，通过优化特征工程，显著提升了模型对欺诈交易的召回率（Recall），实现了高准确度的风险预警系统。`
+  },
+  {
+    keywords: ["运营", "社群", "宣传"],
+    answer: `我有丰富的运营经验：<br><br>🔹 <b>社群运营</b>：运营2个英语学习类社群（50+人），策划每周主题讨论，获「超级组长」称号<br>🔹 <b>学院宣传</b>：负责海报制作、账号运营、文案撰写<br>🔹 <b>自媒体</b>：公众号、短视频创作，持续输出个人IP<br>🔹 <b>流量变现</b>：引流、信息差售卖等实战经验`
+  },
+  {
+    keywords: ["性格", "自我评价", "什么样的人", "特点"],
+    answer: `我是一个积极主动、善于学习的人。性格方面诚实守信、工作严谨务实且耐心细致。我适应能力强，能快速融入新团队，同时具备较强的责任心和团队合作精神。我喜欢将想法付诸实践，对用户增长和市场推广有浓厚热情。`
+  },
+  {
+    keywords: ["求职", "意向", "目标", "找工作", "岗位"],
+    answer: `我的求职意向主要集中在两个方向：<br><br>🔹 <b>技术方向</b>：单片机相关岗位，利用我在电路设计和嵌入式开发方面的经验<br>🔹 <b>运营/文案方向</b>：文案助理等岗位，发挥我在社群运营和内容创作方面的能力<br><br>当然，我也愿意探索更多可能性！`
+  },
+  {
+    keywords: ["联系", "电话", "邮箱", "怎么联系"],
+    answer: `可以通过以下方式联系我：<br><br>📱 电话：19970030603<br>📧 邮箱：3355384381@qq.com<br>📍 位置：江西宜春`
+  },
+  {
+    keywords: ["家教", "教学", "户外", "教练"],
+    answer: `我在教学和户外方面都有丰富经验：<br><br>🔹 <b>户外生存课程教练</b>（2024.06至今）：参与设计实施户外生存训练课程，累计授课30+学时，0安全事故，举办5次活动服务200+成员<br>🔹 <b>个性化家教</b>：定制教学方案，帮助学员中考提升30+分，获得家长一致好评<br>🔹 <b>校园创新创业</b>：组建6人团队，开发户外生存课程`
+  },
+  {
+    keywords: ["兴趣", "爱好", "平时", "喜欢"],
+    answer: `我的兴趣比较多元：<br><br>🔹 喜欢探索AI工具和新技术<br>🔹 热爱自媒体创作和内容输出<br>🔹 对户外活动和生存课程有热情（还是户外教练呢！）<br>🔹 喜欢尝试流量变现、创业等新模式<br>🔹 持续学习和自我提升是我的日常`
+  }
+];
+
+// ===== MODE TOGGLE =====
+let currentMode = 'browse';
+function toggleMode() {
+  const browse = document.getElementById('browse-mode');
+  const chat = document.getElementById('chat-mode');
+  const btn = document.querySelector('.mode-toggle');
+  if (currentMode === 'browse') {
+    browse.style.display = 'none';
+    chat.style.display = 'block';
+    btn.textContent = '📄 浏览模式';
+    currentMode = 'chat';
+    if (!chatInitialized) initChat();
+  } else {
+    browse.style.display = 'block';
+    chat.style.display = 'none';
+    btn.textContent = '💬 对话模式';
+    currentMode = 'browse';
+  }
+}
+
+// ===== SCROLL =====
+function scrollToSection(id) {
+  if (currentMode !== 'browse') toggleMode();
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Update active nav on scroll
+window.addEventListener('scroll', () => {
+  if (currentMode !== 'browse') return;
+  const sections = ['about', 'education', 'experience', 'skills'];
+  let current = 'about';
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 200) current = id;
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const active = document.getElementById('nav-' + current);
+  if (active) active.classList.add('active');
+});
+
+// ===== CHAT =====
+let chatInitialized = false;
+
+function initChat() {
+  chatInitialized = true;
+  addBotMessage(`你好！👋 我是杨文辉的 AI 助手，你可以通过对话来了解关于他的一切。<br><br>试试问我：`, true);
+}
+
+function addBotMessage(text, withQuickQuestions = false) {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg msg-bot';
+  div.innerHTML = `<div class="sender">🤖 文辉助手</div><div>${text}</div>`;
+  if (withQuickQuestions) {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'quick-q';
+    const suggestions = ['介绍一下你自己', '你有什么技能？', '做过哪些项目？', '你的求职意向是什么？', '怎么联系你？', '你是什么样的人？'];
+    suggestions.forEach(q => {
+      const btn = document.createElement('button');
+      btn.textContent = q;
+      btn.onclick = () => { document.getElementById('chat-input').value = q; sendMessage(); };
+      qDiv.appendChild(btn);
+    });
+    div.appendChild(qDiv);
+  }
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg msg-user';
+  div.textContent = text;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg msg-bot';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="sender">🤖 文辉助手</div><div class="typing"><span></span><span></span><span></span></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+function findAnswer(input) {
+  const lower = input.toLowerCase();
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const item of knowledge) {
+    let score = 0;
+    for (const kw of item.keywords) {
+      if (lower.includes(kw)) score++;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = item;
+    }
+  }
+
+  if (bestMatch && bestScore > 0) return bestMatch.answer;
+
+  // Fallback
+  return `抱歉，我暂时不太理解这个问题 😅<br><br>你可以试试问我：<br>- "介绍一下你自己"<br>- "你有什么技能？"<br>- "做过哪些项目？"<br>- "你的求职意向？"<br>- "怎么联系你？"`;
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addUserMessage(text);
+  input.value = '';
+
+  showTyping();
+  const delay = 500 + Math.random() * 800;
+  setTimeout(() => {
+    removeTyping();
+    addBotMessage(findAnswer(text));
+  }, delay);
+}
+</script>
+
+</body>
+</html>
