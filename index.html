@@ -1474,7 +1474,7 @@
 
 【工作与实习经历】
 1. 线上知识社群运营负责人（2024.10-2025.03）- 负责2个英语学习社群的深度运营，通过每日破冰+每周主题交流会建立高粘性组织，获封"超级组长"
-2. 北京九州展鹏教育·市场管培生（2025.09-2025.12）- 负责一线市场信息搜集与推广计划制定，跨部门协作锻炼抗压与沟通能力
+2. 北京九州展鹏教育江西分公司·市场管培生（2025.09-2025.12）- 负责一线市场信息搜集与推广计划制定，跨部门协作锻炼抗压与沟通能力
 
 【项目经历】
 1. AI数字化个人履历网站 - 利用专业背景将简历可视化，嵌入LLM对话功能
@@ -1768,7 +1768,7 @@
         var messages = [
           { role: 'system', content: getSystemPrompt(mode, mode === 'interview' ? currentJob : null) }
         ];
-        var hist = chatHistory[mode].slice(-8);
+        var hist = chatHistory[mode].slice(-4);
         for (var i = 0; i < hist.length; i++) {
           messages.push({
             role: hist[i].role === 'user' ? 'user' : 'assistant',
@@ -1785,8 +1785,8 @@
           body: JSON.stringify({
             model: 'MiniMax-Text-01',
             messages: messages,
-            temperature: 0.8,
-            max_tokens: 1024
+            temperature: 0.7,
+            max_tokens: 512
           })
         });
 
