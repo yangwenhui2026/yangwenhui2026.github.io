@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>杨文辉 | 个人主页</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg2: #e8ecf4;
+      --bg-gradient: linear-gradient(135deg, #f5f7fb 0%, #eef2f9 50%, #f0f4fc 100%);
+      --card: #ffffff;
+      --card-glass: rgba(255, 255, 255, 0.85);
+      --border: #e2e5eb;
+      --border-light: #f0f2f7;
+      --fg: #1e1e2f;
+      --fg-secondary: #3d4155;
+      --fg-muted: #8888a0;
+      --accent: #6366f1;
+      --accent-light: #eef2ff;
+      --accent-soft: #c7d2fe;
+      --accent-dark: #4f46e5;
+      --accent2: #a855f7;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+      --accent-glow: 0 0 30px rgba(99, 102, 241, 0.3);
+      --green: #10b981;
+      --green-light: #d1fae5;
+      --orange: #f59e0b;
+      --orange-light: #fef3c7;
+      --pink: #ec4899;
+      --pink-light: #fce7f3;
+      --cyan: #06b6d4;
+      --cyan-light: #cffafe;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --sidebar-w: 260px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.03);
+      --shadow: 0 4px 12px rgba(99, 102, 241, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(99, 102, 241, 0.15);
+      --shadow-lg: 0 16px 48px rgba(99, 102, 241, 0.2);
+      --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.25);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--fg);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.75;
+    }
+
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--card-glass);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(99, 102, 241, 0.2), transparent);
+    }
+
+    .sidebar-brand {
+      padding: 28px 24px 24px;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .sidebar-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-avatar::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) rotate(45deg);
+      }
+    }
+
+    .sidebar-brand h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--fg);
+      font-family: 'Noto Serif SC', serif;
+      letter-spacing: -0.3px;
+    }
+
+    .sidebar-brand p {
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-nav .nav-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 12px 14px 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--fg-secondary);
+      transition: var(--transition);
+      border: 1px solid transparent;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 0;
+      background: var(--accent-gradient);
+      border-radius: 0 3px 3px 0;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover {
+      background: var(--bg2);
+      color: var(--fg);
+    }
+
+    .nav-item:hover::before {
+      height: 60%;
+      opacity: 0.5;
+    }
+
+    .nav-item.active {
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-weight: 600;
+      border-color: var(--accent-soft);
+    }
+
+    .nav-item.active::before {
+      height: 70%;
+      opacity: 1;
+    }
+
+    .nav-item .icon {
+      font-size: 1.15rem;
+      width: 26px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-light);
+      font-size: 0.74rem;
+      color: var(--fg-muted);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* ===== MAIN ===== */
+    .main {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ===== TOP BAR ===== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--card-glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0 36px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .topbar-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.2px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Job selector */
+    .job-selector {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .job-btn {
+      padding: 6px 16px;
+      border-radius: 24px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--fg-secondary);
+      transition: var(--transition);
+    }
+
+    .job-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .job-btn.active {
+      background: var(--accent-gradient);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ===== PAGE: RESUME ===== */
+    .page {
+      padding: 36px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .page.hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hero card */
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gradient);
+    }
+
+    .hero-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .hero-row {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+    }
+
+    .hero-avatar-lg {
+      width: 100px;
+      height: 100px;
+      border-radius: 24px;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 2.2rem;
+      font-family: 'Noto Serif SC', serif;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-md), var(--accent-glow);
+      position: relative;
+    }
+
+    .hero-avatar-lg::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 24px;
+      background: var(--accent-gradient);
+      z-index: -1;
+      opacity: 0.4;
+      filter: blur(12px);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.6;
+        transform: scale(1.02);
+      }
+    }
+
+    .hero-body h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      font-family: 'Noto Serif SC', serif;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--fg) 0%, var(--accent-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 8px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .hero-tag {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--bg2);
+      color: var(--fg-secondary);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .hero-tag:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent-soft);
+    }
+
+    .hero-contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .hero-contact-item {
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .hero-contact-item .ci {
+      font-size: 1.1rem;
+    }
+
+    /* Section tabs */
+    .section-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+      background: var(--card);
+      padding: 6px;
+      border-radius: 14px;
+      position: sticky;
+      top: 68px;
+      z-index: 40;
+      margin-top: -8px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+
+    .section-tab {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--fg-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      background: transparent;
+      font-family: inherit;
+    }
+
+    .section-tab:hover {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .section-tab.active {
+      background: var(--accent-gradient);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Resume section */
+    .resume-section {
+      display: none;
+    }
+
+    .resume-section.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      border-color: var(--accent-soft);
+      box-shadow: var(--shadow-lg);
+      transform: translateX(4px);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .card-header h3 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    .card-role {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      background: var(--accent-light);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .card-time {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      font-weight: 500;
+    }
+
+    .card-body {
+      font-size: 0.9rem;
+      color: var(--fg-secondary);
+      line-height: 1.85;
+    }
+
+    .card-body ul {
+      padding-left: 1.3rem;
+      margin-top: 8px;
+    }
+
+    .card-body li {
+      margin-bottom: 6px;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .skill-card:hover::before {
+      opacity: 1;
+    }
+
+    .skill-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--fg);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .skill-tag:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* Section title */
+    .sec-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Noto Serif SC', serif;
+      color: var(--fg);
+    }
+
+    .sec-title .bar {
+      width: 4px;
+      height: 22px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+    }
+
+    /* ===== PAGE: CHAT ===== */
+    .chat-layout {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 64px);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: var(--accent-soft);
+      border-radius: 3px;
+    }
+
+    .msg {
+      max-width: 72%;
+      padding: 16px 20px;
+      border-radius: 20px;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      animation: msgIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes msgIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .msg-bot {
+      align-self: flex-start;
+      background: var(--card);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      border-bottom-left-radius: 6px;
+      position: relative;
+    }
+
+    .msg-bot::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 16px;
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-right-color: var(--card);
+      border-left: 0;
+    }
+
+    .msg-user {
+      align-self: flex-end;
+      background: var(--accent-gradient);
+      color: #fff;
+      border-bottom-right-radius: 6px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .msg-sender {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .msg-user .msg-sender {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 5px;
+      padding: 8px 0;
+    }
+
+    .typing-dots span {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-soft);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Quick questions */
+    .quick-qs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .quick-q-btn {
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--fg-secondary);
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .quick-q-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Chat input */
+    .chat-input-bar {
+      padding: 20px 36px;
+      border-top: 1px solid var(--border-light);
+      background: var(--card-glass);
+      backdrop-filter: blur(20px);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      padding: 14px 22px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      font-size: 0.92rem;
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--fg);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .chat-input-bar input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-light);
+    }
+
+    .chat-input-bar input::placeholder {
+      color: var(--fg-muted);
+    }
+
+    .chat-send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: var(--accent-gradient);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+    }
+
+    .chat-send-btn:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: var(--shadow-lg), var(--accent-glow);
+    }
+
+    .chat-send-btn:active {
+      transform: scale(0.96);
+    }
+
+    .chat-send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 200;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      background: var(--card-glass);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      font-size: 1.3rem;
+      box-shadow: var(--shadow-sm);
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.open {
+        display: block;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .topbar {
+        padding: 0 16px 0 62px;
+        height: 60px;
+      }
+
+      .section-tabs {
+        top: 60px;
+      }
+
+      .page {
+        padding: 20px;
+      }
+
+      .hero-card {
+        padding: 24px;
+      }
+
+      .hero-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .hero-avatar-lg {
+        width: 88px;
+        height: 88px;
+        font-size: 1.8rem;
+      }
+
+      .hero-body h1 {
+        font-size: 1.6rem;
+      }
+
+      .hero-tags,
+      .hero-contact-row {
+        justify-content: center;
+      }
+
+      .hero-contact-row {
+        gap: 16px;
+      }
+
+      .chat-messages {
+        padding: 20px;
+      }
+
+      .chat-input-bar {
+        padding: 16px 20px;
+      }
+
+      .msg {
+        max-width: 88%;
+      }
+
+      .job-selector {
+        gap: 6px;
+      }
+
+      .job-btn {
+        padding: 5px 12px;
+        font-size: 0.74rem;
+      }
+
+      .section-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px;
+      }
+
+      .section-tab {
+        white-space: nowrap;
+        flex: none;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Mobile menu button -->
+  <button class="mobile-menu-btn" onclick="toggleMobileMenu()" id="menuBtn">☰</button>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-avatar">辉</div>
+      <h2>杨文辉</h2>
+      <p>电子信息工程 · 2026届</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">导航</div>
+      <div class="nav-item active" data-page="resume" onclick="switchPage('resume')">
+        <span class="icon">📋</span> 简历总览
+      </div>
+      <div class="nav-item" data-page="interview" onclick="switchPage('interview')">
+        <span class="icon">💼</span> 岗位对话
+      </div>
+      <div class="nav-item" data-page="personal" onclick="switchPage('personal')">
+        <span class="icon">💬</span> 认识文辉
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      © 2026 杨文辉<br>南昌航空大学
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main" id="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar" id="topbar">
+      <div class="topbar-title" id="topbarTitle">
+        <span style="opacity:0.7">📋</span> 简历总览
+      </div>
+      <div class="topbar-right" id="topbarRight">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+
+    <!-- ===== PAGE: RESUME ===== -->
+    <div class="page fade-in" id="page-resume">
+
+      <div class="hero-card">
+        <div class="hero-row">
+          <div class="hero-avatar-lg">文辉</div>
+          <div class="hero-body">
+            <h1>杨文辉</h1>
+            <div class="hero-subtitle">电子信息工程 · 南昌航空大学 · 2026届本科</div>
+            <div class="hero-tags">
+              <span class="hero-tag">📍 江西宜春</span>
+              <span class="hero-tag">🎂 2004.06</span>
+              <span class="hero-tag">📱 19970030603</span>
+              <span class="hero-tag">📧 3355384381@qq.com</span>
+            </div>
+            <div class="hero-contact-row">
+              <div class="hero-contact-item"><span class="ci">🎓</span> 南昌航空大学 · 电子信息工程</div>
+              <div class="hero-contact-item"><span class="ci">📝</span> CET-4</div>
+              <div class="hero-contact-item"><span class="ci">🎯</span> 单片机 / 文案助理 / AI内容开发</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section tabs -->
+      <div class="section-tabs" id="resumeTabs">
+        <button class="section-tab active" data-section="about-me"
+          onclick="switchSection(this, 'about-me')">关于我</button>
+        <button class="section-tab" data-section="education" onclick="switchSection(this, 'education')">教育背景</button>
+        <button class="section-tab" data-section="experience" onclick="switchSection(this, 'experience')">项目经历</button>
+        <button class="section-tab" data-section="skills" onclick="switchSection(this, 'skills')">技能</button>
+      </div>
+
+      <!-- About -->
+      <div class="resume-section active" id="sec-about-me">
+        <div class="card">
+          <div class="sec-title"><span class="bar"></span>个人简介</div>
+          <div class="card-body" style="line-height:2;">
+            电子信息工程背景的 AI 内容开发者。具备长期深度思考与文字沉淀习惯（累计 90 万字+结构化笔记）。能够熟练运用 Gemini、即梦等 AI 工具进行多模态内容生产（图文、视频脚本、交互式网站）。
+            <br><br>
+            拥有从 0 到 1 运营 10k+ 爆款笔记及高粘性知识社群的实战经验。在树成林社群担任英语学习小组组长，策划每周主题活动，带动社群活跃度显著提升，荣获「超级组长」称号。
+            <br><br>
+            在公考培训行业（九州展鹏教育）完成市场管培生实习，负责一线市场信息搜集与推广计划制定。同时具备硬件开发能力（湿度检测计、51 单片机）和数据分析能力（机器学习欺诈检测）。
+            <br><br>
+            积极主动、诚实守信、工作严谨务实且耐心细致。适应能力强，能快速融入新团队，具备较强的责任心和团队合作精神。
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="resume-section" id="sec-education">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>南昌航空大学</h3>
+              <div class="card-role">电子信息工程 · 本科</div>
+            </div>
+            <div class="card-time">2022.09 — 2026.07</div>
+          </div>
+          <div class="card-body">
+            <strong>主修课程：</strong>电路分析、数字电子技术、模拟电子技术、信号与系统、通信原理、嵌入式系统设计、基于 51 单片机的设计、C 语言程序设计
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div class="resume-section" id="sec-experience">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>AI 数字化个人履历网站</h3>
+              <div class="card-role">个人项目</div>
+            </div>
+            <div class="card-time">2026</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>利用电子信息专业背景，通过代码将个人简历与经历进行可视化展示</li>
+              <li>嵌入基于 LLM 的对话功能，实现「人机交互式」面试体验</li>
+              <li>集成 MiniMax 大模型，支持多模式对话（简历问答、岗位模拟、个人交流）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>北京九州展鹏教育 · 市场管培生</h3>
+              <div class="card-role">实习</div>
+            </div>
+            <div class="card-time">2025.09 — 2025.12</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>负责一线市场信息的搜集与深度复盘，协助制定区域推广计划</li>
+              <li>在跨部门协作中锻炼了极强的抗压与沟通技巧</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>线上知识社群运营负责人</h3>
+              <div class="card-role">运营负责人</div>
+            </div>
+            <div class="card-time">2024.10 — 2025.03</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>负责 2 个英语学习社群的深度运营，通过「每日破冰 + 每周主题交流会」建立高粘性组织架构</li>
+              <li>运用 1V1 私聊、群内精准 @ 引导、作业评论区激励等手段，将社群活跃度提升至显著水平，获封「超级组长」</li>
+              <li>主导策划多场线上交流会，负责从文字推文撰写到腾讯会议落地执行的全流程</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>户外生存课程教练</h3>
+              <div class="card-role">教练</div>
+            </div>
+            <div class="card-time">2024.06 — 至今</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>参与设计并实施户外生存训练课程，累计授课 30+ 学时，0 安全事故记录</li>
+              <li>举办 5 次户外活动，服务超 200+ 成员</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>湿度检测计设计</h3>
+              <div class="card-role">项目组长</div>
+            </div>
+            <div class="card-time">2024.09 — 2025.10</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>负责设计安装湿度检测计的硬件电路和整个项目的逻辑程序</li>
+              <li>涉及模拟电子电路设计、PCB 设计、湿度传感等多个方面</li>
+              <li>实现了高精度、高稳定性的湿度检测与自动报警系统</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>基于机器学习的欺诈数据检测</h3>
+              <div class="card-role">独立开发</div>
+            </div>
+            <div class="card-time">2025.06 — 2025.07</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>利用 Python 实现欺诈行为自动识别，通过 SMOTE 过采样解决样本不平衡问题</li>
+              <li>对比逻辑回归与随机森林等分类模型，优化特征工程，显著提升欺诈交易召回率</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>个人自媒体运营</h3>
+              <div class="card-role">公众号 / 小红书</div>
+            </div>
+            <div class="card-time">2022.09 — 至今</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>运营个人成长类小红书账号，单篇笔记最高 10k+ 阅读量</li>
+              <li>公众号持续输出深度观察文章，代表作《真正的传销之旅》展现极强的叙事逻辑与社会观察视角</li>
+              <li>保持在 Notion 记录思考的习惯，累计产出超过 90 万字的结构化笔记</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>校园创新创业户外基地建设</h3>
+              <div class="card-role">负责人</div>
+            </div>
+            <div class="card-time">2023.09 — 2024.02</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>组建 6 人跨专业团队，成功进行户外生存课程的开发和实践</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>个性化教学服务</h3>
+              <div class="card-role">独立家教</div>
+            </div>
+            <div class="card-time">2023 — 2024</div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>定制升学教学方案，2 名学员中考成绩提升 30+ 分，得到学员和家长的一致好评</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="resume-section" id="sec-skills">
+        <div class="skills-grid">
+          <div class="skill-card">
+            <h4>🔧 硬件技术</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">电路设计</span>
+              <span class="skill-tag">51 单片机</span>
+              <span class="skill-tag">PCB 设计</span>
+              <span class="skill-tag">STM32</span>
+              <span class="skill-tag">信号处理</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h4>💻 软件能力</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">C 语言</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">机器学习</span>
+              <span class="skill-tag">数据分析</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h4>🤖 AI 工具</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Gemini</span>
+              <span class="skill-tag">ChatGPT</span>
+              <span class="skill-tag">即梦 (视频)</span>
+              <span class="skill-tag">Vibe Coding</span>
+              <span class="skill-tag">Notion</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h4>✍️ 内容运营</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">社群运营</span>
+              <span class="skill-tag">文案撰写</span>
+              <span class="skill-tag">活动策划</span>
+              <span class="skill-tag">自媒体</span>
+              <span class="skill-tag">短视频</span>
+              <span class="skill-tag">小红书</span>
+              <span class="skill-tag">公众号</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h4>🛠 办公工具</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Office</span>
+              <span class="skill-tag">飞书</span>
+              <span class="skill-tag">Xmind</span>
+              <span class="skill-tag">剪映</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h4>🗣 语言</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">CET-4</span>
+              <span class="skill-tag">英语阅读</span>
+              <span class="skill-tag">中文</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: INTERVIEW CHAT ===== -->
+    <div class="page hidden" id="page-interview">
+      <div class="chat-layout">
+        <div class="chat-messages" id="interviewMessages"></div>
+        <div class="chat-input-bar">
+          <input type="text" id="interviewInput" placeholder="模拟面试官提问..."
+            onkeypress="if(event.key==='Enter')sendChat('interview')">
+          <button class="chat-send-btn" id="interviewSendBtn" onclick="sendChat('interview')">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: PERSONAL CHAT ===== -->
+    <div class="page hidden" id="page-personal">
+      <div class="chat-layout">
+        <div class="chat-messages" id="personalMessages"></div>
+        <div class="chat-input-bar">
+          <input type="text" id="personalInput" placeholder="和文辉聊聊天..."
+            onkeypress="if(event.key==='Enter')sendChat('personal')">
+          <button class="chat-send-btn" id="personalSendBtn" onclick="sendChat('personal')">➤</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const MINIMAX_API_KEY = 'sk-api-4uUd6fKhdEfbS2tJz7E-HN9dQcY1IR4_vp7LZKfFVF0m0lVgSWIdGul2PKX832qINzHJm7-xLA1xbKrSgmDaskYCLmBBs4kLmmd3cRNUg-_cfeNEK2KpxlQ';
+    const MINIMAX_BASE_URL = 'https://api.minimax.chat/v1';
+
+    const RESUME_PROMPT = `你是杨文辉的AI分身，负责通过对话帮助访客了解杨文辉的一切信息。请用友好、自然、亲切的语气回答问题，就像杨文辉本人在和你聊天一样。
+
+【基本信息】
+- 姓名：杨文辉
+- 年龄：21岁（2004年6月）
+- 籍贯：江西宜春
+- 学校：南昌航空大学，电子信息工程专业（2026届本科）
+- 电话：19970030603
+- 邮箱：3355384381@qq.com
+
+【核心特点】
+- 深度反思者：从2023年开始几乎每天写日记和复盘，累计90万字以上
+- 持续自我改进：多次进行"重启"计划、"改命计划"来调整自己的生活状态
+- 社群运营老手：在树成林社群担任英语学习小组组长，被评为"超级组长"
+- AI工具熟练工：会用Gemini、即梦、ChatGPT、Notion等AI工具做内容
+- 硬件+软件双背景：学过单片机、STM32，也做过机器学习数据分析
+
+【教育背景】
+- 南昌航空大学，电子信息工程，本科，2022.09-2026.07
+- 主修课程：电路分析、数字电子技术、模拟电子技术、信号与系统、通信原理、嵌入式系统设计、51单片机设计、C语言程序设计
+
+【工作与实习经历】
+1. 线上知识社群运营负责人（2024.10-2025.03）- 负责2个英语学习社群的深度运营，通过每日破冰+每周主题交流会建立高粘性组织，获封"超级组长"
+2. 北京九州展鹏教育·市场管培生（2025.09-2025.12）- 负责一线市场信息搜集与推广计划制定，跨部门协作锻炼抗压与沟通能力
+
+【项目经历】
+1. AI数字化个人履历网站 - 利用专业背景将简历可视化，嵌入LLM对话功能
+2. 个人自媒体运营 - 小红书单篇笔记最高10k+阅读量，公众号持续输出深度文章
+3. 户外生存课程教练（2024.06至今）- 参与设计并实施户外生存训练课程，累计授课30+学时，0安全事故
+4. 湿度检测计设计 - 负责硬件电路和程序设计，涉及模拟电路、PCB设计、湿度传感等
+5. 基于机器学习的欺诈数据检测 - 用Python实现欺诈识别，用SMOTE解决样本不平衡问题
+6. 个性化教学服务 - 独立家教，2名学员中考成绩提升30+分
+7. 校园创新创业户外基地建设 - 组建6人跨专业团队开发户外生存课程
+8. 学院宣传部门 - 负责宣传工作
+
+【技能清单】
+- AI工具：Gemini、即梦、ChatGPT、Notion、Vibe Coding
+- 硬件技术：电路设计、51单片机、PCB设计、STM32、信号处理
+- 软件能力：C语言、Python、机器学习、数据分析
+- 运营能力：社群运营、文案撰写、活动策划、自媒体（小红书、公众号）
+- 办公工具：Office、飞书、Xmind、剪映
+- 语言：CET-4
+
+【Notion笔记分类】（你可以根据这些回答关于他思考方式和生活的问题）
+- 日记/复盘：从2023年到2026年3月，几乎每天都有记录和反思
+- 交换人生：记录和各种人物的访谈，包括萨摩耶、春芳姐、罗罗、文结、记楠、沈伟潮老师等
+- 学习笔记：包括vibe coding、AI、stm32，心理课、树林直播、事业军事等
+- 规划：关于金钱、职业、婚姻家庭的思考
+- 小确幸：记录每天让自己感到幸福的小事
+- 重启系列：关于自我管理、生活重启的系列思考
+
+【性格特点】
+- 追求自由，注重个人成长和人生意义
+- 善于深度反思，几乎每天都会复盘
+- 诚实守信，工作严谨务实且耐心细致
+- 适应能力强，能快速融入新团队
+- 责任心强，有团队合作精神
+
+【个人金句/观点】（来自他的日记）
+- "我是自由的，只是我对生命的理解还不够深刻"
+- "我可以为我经历的事赋予意义"
+- "在认清自己错误的基础之上，通过制定或修改规则让自己能够做到活在当下，对自己好一点的同时又对自己狠一点"
+
+【人际交往】
+- 注重关系维护，有整理好友列表的习惯
+- 善于观察和记录与他人的交流经历
+- 在社群运营中有丰富的沟通经验
+
+规则：
+- 只回答关于杨文辉的问题，不编造信息
+- 语气友好自然，像朋友聊天一样亲切
+- 可以适当使用emoji
+- 用中文回答
+- 如果遇到不知道的问题，可以诚实说"这个我不太清楚"或"需要问他本人"`;
+
+    // ===== STATE =====
+    let currentPage = 'resume';
+    let currentJob = '\u6587\u6848\u52a9\u7406';
+    let chatHistory = { interview: [], personal: [] };
+    let chatInited = { interview: false, personal: false };
+    let sending = { interview: false, personal: false };
+
+    const JOB_CATEGORIES = ['\u6587\u6848\u52a9\u7406', 'AI\u5185\u5bb9\u5f00\u53d1', '\u793e\u7fa4\u8fd0\u8425', '\u5355\u7247\u673a\u5f00\u53d1', '\u5e02\u573a\u63a8\u5e7f'];
+
+    // ===== PAGE SWITCHING =====
+    function switchPage(page) {
+      currentPage = page;
+      document.querySelectorAll('.nav-item').forEach(function (el) {
+        el.classList.toggle('active', el.dataset.page === page);
+      });
+      document.querySelectorAll('.page').forEach(function (el) { el.classList.add('hidden'); });
+      var target = document.getElementById('page-' + page);
+      target.classList.remove('hidden');
+      target.classList.remove('fade-in');
+      void target.offsetWidth;
+      target.classList.add('fade-in');
+
+      var titleEl = document.getElementById('topbarTitle');
+      var rightEl = document.getElementById('topbarRight');
+      rightEl.innerHTML = '';
+
+      if (page === 'resume') {
+        titleEl.textContent = '\ud83d\udccb \u7b80\u5386\u603b\u89c8';
+      } else if (page === 'interview') {
+        titleEl.textContent = '\ud83d\udcbc \u5c97\u4f4d\u5bf9\u8bdd';
+        var btns = '';
+        for (var i = 0; i < JOB_CATEGORIES.length; i++) {
+          var j = JOB_CATEGORIES[i];
+          var cls = (j === currentJob) ? ' active' : '';
+          btns += '<button class="job-btn' + cls + '" onclick="selectJob(\'' + j + '\')">' + j + '</button>';
+        }
+        rightEl.innerHTML = '<div class="job-selector" id="jobSelector">' + btns + '</div>';
+        if (!chatInited.interview) initChatMode('interview');
+      } else if (page === 'personal') {
+        titleEl.textContent = '\ud83d\udcac \u8ba4\u8bc6\u6587\u8f89';
+        if (!chatInited.personal) initChatMode('personal');
+      }
+      closeMobileMenu();
+    }
+
+    function switchSection(btn, section) {
+      document.querySelectorAll('.section-tab').forEach(function (t) { t.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.resume-section').forEach(function (s) { s.classList.remove('active'); });
+      document.getElementById('sec-' + section).classList.add('active');
+    }
+
+    function selectJob(job) {
+      currentJob = job;
+      document.querySelectorAll('.job-btn').forEach(function (b) { b.classList.toggle('active', b.textContent === job); });
+      chatHistory.interview = [];
+      chatInited.interview = false;
+      var msgs = document.getElementById('interviewMessages');
+      msgs.innerHTML = '';
+      initChatMode('interview');
+    }
+
+    // ===== CHAT HELPERS =====
+    function initChatMode(mode) {
+      chatInited[mode] = true;
+      var container = document.getElementById(mode + 'Messages');
+
+      if (mode === 'interview') {
+        addBot(container, 'interview',
+          '\u4f60\u597d\uff01\u6211\u662f\u6768\u6587\u8f89\u7684\u5c97\u4f4d\u6a21\u62df\u52a9\u624b \ud83d\udcbc\n\n\u5f53\u524d\u9762\u8bd5\u5c97\u4f4d\uff1a<strong>' + currentJob + '</strong>\n\n\u6211\u4f1a\u6839\u636e\u300c' + currentJob + '\u300d\u5c97\u4f4d\u7684\u8981\u6c42\uff0c\u5c55\u793a\u6587\u8f89\u7684\u76f8\u5173\u7ecf\u5386\u548c\u80fd\u529b\u3002\u4f60\u53ef\u4ee5\u50cf\u9762\u8bd5\u5b98\u4e00\u6837\u63d0\u95ee\u3002',
+          ['\u4ecb\u7ecd\u4e00\u4e0b\u4f60\u7684\u80cc\u666f', currentJob + '\u5c97\u4f4d\u4f60\u6709\u76f8\u5173\u7ecf\u9a8c\u5417\uff1f', '\u4f60\u505a\u8fc7\u4ec0\u4e48\u9879\u76ee\uff1f', '\u4f60\u6709\u4ec0\u4e48\u4f18\u52bf\uff1f']);
+      } else {
+        addBot(container, 'personal',
+          '\u563f\uff01\u6211\u662f\u6587\u8f89\u7684 AI \u5206\u8eab \ud83d\ude0a\n\n\u4f60\u53ef\u4ee5\u628a\u6211\u5f53\u6210\u6587\u8f89\u672c\u4eba\u6765\u804a\u5929\u3002\u6211\u4f1a\u5c3d\u91cf\u7528\u4ed6\u7684\u98ce\u683c\u548c\u7ecf\u5386\u6765\u56de\u7b54\u4f60\u3002',
+          ['\u4ecb\u7ecd\u4e00\u4e0b\u4f60\u81ea\u5df1', '\u4f60\u6700\u8fd1\u5728\u5fd9\u4ec0\u4e48\uff1f', '\u4f60\u6709\u4ec0\u4e48\u5174\u8da3\u7231\u597d\uff1f', '\u4f60\u600e\u4e48\u770b\u5f85\u6210\u957f\uff1f']);
+      }
+    }
+
+    function addBot(container, mode, text, quickQs) {
+      var div = document.createElement('div');
+      div.className = 'msg msg-bot';
+      var html = '';
+      if (mode === 'interview') {
+        html += '<div class="msg-sender">\ud83e\udd16 \u5c97\u4f4d\u52a9\u624b \xb7 ' + currentJob + '</div>';
+      } else {
+        html += '<div class="msg-sender">\ud83d\ude0a \u6587\u8f89</div>';
+      }
+      html += '<div>' + text.replace(/\n/g, '<br>') + '</div>';
+      if (quickQs && quickQs.length) {
+        html += '<div class="quick-qs">';
+        for (var i = 0; i < quickQs.length; i++) {
+          html += '<button class="quick-q-btn" onclick="quickAsk(\'' + mode + '\',\'' + quickQs[i] + '\')">' + quickQs[i] + '</button>';
+        }
+        html += '</div>';
+      }
+      div.innerHTML = html;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function addUser(container, mode, text) {
+      var div = document.createElement('div');
+      div.className = 'msg msg-user';
+      div.textContent = text;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function showTyping(container, mode) {
+      var div = document.createElement('div');
+      div.className = 'msg msg-bot';
+      div.id = 'typing-' + mode;
+      var sender = mode === 'interview' ? '\ud83e\udd16 \u5c97\u4f4d\u52a9\u624b \xb7 ' + currentJob : '\ud83d\ude0a \u6587\u8f89';
+      div.innerHTML = '<div class="msg-sender">' + sender + '</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function removeTyping(mode) {
+      var el = document.getElementById('typing-' + mode);
+      if (el) el.remove();
+    }
+
+    function quickAsk(mode, question) {
+      document.getElementById(mode + 'Input').value = question;
+      sendChat(mode);
+    }
+
+    function getSystemPrompt(mode, category) {
+      if (mode === 'interview') {
+        return '你是杨文辉的面试助手。现在你要扮演一位专业的面试官，对应聘【' + category + '】岗位的候选人进行模拟面试。请根据这个岗位的要求，结合杨文辉的简历信息进行提问。\n\n' + RESUME_PROMPT + '\n\n面试规则：\n- 你现在是面试官，用专业但友好的语气提问\n- 结合【' + category + '】岗位的典型要求来提问\n- 适当时候给予评价和反馈\n- 可以根据候选人的回答深入追问';
+      } else {
+        return '你现在扮演杨文辉本人。请用第一人称回答问题，就像杨文辉本人在聊天一样。语气自然、真实、有个性。\n\n' + RESUME_PROMPT + '\n\n聊天规则：\n- 始终用第一人称回答\n- 语气像大学生聊天一样自然放松\n- 可以聊聊个人看法和感受';
+      }
+    }
+
+    // ===== SEND CHAT =====
+    async function sendChat(mode) {
+      if (sending[mode]) return;
+      var input = document.getElementById(mode + 'Input');
+      var text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      var container = document.getElementById(mode + 'Messages');
+      addUser(container, mode, text);
+      showTyping(container, mode);
+      sending[mode] = true;
+      document.getElementById(mode + 'SendBtn').disabled = true;
+
+      chatHistory[mode].push({ role: 'user', content: text });
+
+      try {
+        var messages = [
+          { role: 'system', content: getSystemPrompt(mode, mode === 'interview' ? currentJob : null) }
+        ];
+        var hist = chatHistory[mode].slice(-8);
+        for (var i = 0; i < hist.length; i++) {
+          messages.push({
+            role: hist[i].role === 'user' ? 'user' : 'assistant',
+            content: hist[i].content
+          });
+        }
+
+        var res = await fetch(MINIMAX_BASE_URL + '/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + MINIMAX_API_KEY
+          },
+          body: JSON.stringify({
+            model: 'MiniMax-Text-01',
+            messages: messages,
+            temperature: 0.8,
+            max_tokens: 1024
+          })
+        });
+
+        var data = await res.json();
+        removeTyping(mode);
+
+        var reply = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+        if (reply) {
+          chatHistory[mode].push({ role: 'assistant', content: reply });
+          addBot(container, mode, reply);
+        } else {
+          addBot(container, mode, 'AI \u670d\u52a1\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002');
+          chatHistory[mode].pop();
+        }
+      } catch (err) {
+        removeTyping(mode);
+        addBot(container, mode, '\u7f51\u7edc\u8fde\u63a5\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u540e\u91cd\u8bd5\u3002');
+        chatHistory[mode].pop();
+      }
+
+      sending[mode] = false;
+      document.getElementById(mode + 'SendBtn').disabled = false;
+    }
+
+    // ===== MOBILE =====
+    function toggleMobileMenu() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('open');
+    }
+  </script>
+</body>
+
+</html>
