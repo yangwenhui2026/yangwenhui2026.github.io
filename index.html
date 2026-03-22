@@ -1435,8 +1435,8 @@
   </div>
 
   <script>
-    const MINIMAX_API_KEY = 'sk-api-4uUd6fKhdEfbS2tJz7E-HN9dQcY1IR4_vp7LZKfFVF0m0lVgSWIdGul2PKX832qINzHJm7-xLA1xbKrSgmDaskYCLmBBs4kLmmd3cRNUg-_cfeNEK2KpxlQ';
-    const MINIMAX_BASE_URL = 'https://api.minimax.chat/v1';
+    // 代理API地址（Vercel部署后替换为自定义域名）
+    const API_PROXY_URL = 'https://vercel-proxy-2bugckgld-3355384381-8724s-projects.vercel.app/api/chat';
 
     const RESUME_PROMPT = `你是杨文辉的AI分身，负责通过对话帮助访客了解杨文辉的一切信息。请用友好、自然、亲切的语气回答问题，就像杨文辉本人在和你聊天一样。
 
@@ -1765,35 +1765,26 @@
       chatHistory[mode].push({ role: 'user', content: text });
 
       try {
-        var messages = [
-          { role: 'system', content: getSystemPrompt(mode, mode === 'interview' ? currentJob : null) }
-        ];
         var hist = chatHistory[mode].slice(-4);
-        for (var i = 0; i < hist.length; i++) {
-          messages.push({
-            role: hist[i].role === 'user' ? 'user' : 'assistant',
-            content: hist[i].content
-          });
-        }
 
-        var res = await fetch(MINIMAX_BASE_URL + '/chat/completions', {
+        // 调用代理API
+        var res = await fetch(API_PROXY_URL, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + MINIMAX_API_KEY
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model: 'MiniMax-Text-01',
-            messages: messages,
-            temperature: 0.7,
-            max_tokens: 512
+            message: text,
+            history: hist,
+            mode: mode,
+            category: mode === 'interview' ? currentJob : null
           })
         });
 
         var data = await res.json();
         removeTyping(mode);
 
-        var reply = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+        var reply = data.reply;
         if (reply) {
           chatHistory[mode].push({ role: 'assistant', content: reply });
           addBot(container, mode, reply);
