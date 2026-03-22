@@ -1821,11 +1821,26 @@
     }
 
     // ===== SEND CHAT =====
+    // 用于存储当前流式响应的controller，用于打断
+    var currentAbortController = null;
+    var currentBotDiv = null;
+
     async function sendChat(mode) {
-      if (sending[mode]) return;
       var input = document.getElementById(mode + 'Input');
       var text = input.value.trim();
       if (!text) return;
+
+      // 如果正在发送，打断当前响应
+      if (sending[mode]) {
+        if (currentAbortController) {
+          currentAbortController.abort();
+        }
+        // 移除正在生成的回复
+        if (currentBotDiv) {
+          currentBotDiv.remove();
+          chatHistory[mode].pop();
+        }
+      }
 
       input.value = '';
       var container = document.getElementById(mode + 'Messages');
@@ -1836,10 +1851,13 @@
 
       chatHistory[mode].push({ role: 'user', content: text });
 
-      try {
-        var hist = chatHistory[mode].slice(-4);
+      // 创建新的 AbortController 用于打断
+      currentAbortController = new AbortController();
 
-        // 调用代理API
+      try {
+        var hist = chatHistory[mode].slice(-3);  // 只保留最近3条历史
+
+        // 调用代理API，使用流式响应
         var res = await fetch(API_PROXY_URL, {
           method: 'POST',
           headers: {
@@ -1850,24 +1868,77 @@
             history: hist,
             mode: mode,
             category: mode === 'interview' ? currentJob : null
-          })
+          }),
+          signal: currentAbortController.signal
         });
 
-        var data = await res.json();
+        // 移除 typing 提示
         removeTyping(mode);
 
-        var reply = data.reply;
-        if (reply) {
-          chatHistory[mode].push({ role: 'assistant', content: reply });
-          addBot(container, mode, reply);
+        // 创建 Bot 消息容器（用于流式显示）
+        var botDiv = document.createElement('div');
+        botDiv.className = 'msg msg-bot';
+        var html = '';
+        if (mode === 'interview') {
+          html += '<div class="msg-sender">\ud83e\udd16 \u5c97\u4f4d\u52a9\u624b \xb7 ' + currentJob + '</div>';
         } else {
-          addBot(container, mode, 'AI \u670d\u52a1\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002');
+          html += '<div class="msg-sender">\ud83d\ude0a \u6587\u8f89</div>';
+        }
+        html += '<div class="msg-content" id="streamingContent"></div>';
+        botDiv.innerHTML = html;
+        container.appendChild(botDiv);
+        currentBotDiv = botDiv;
+
+        var streamingContent = document.getElementById('streamingContent');
+        var fullReply = '';
+
+        // 读取流式响应
+        var reader = res.body.getReader();
+        var decoder = new TextDecoder();
+
+        while (true) {
+          var { done, value } = await reader.read();
+          if (done) break;
+
+          var chunk = decoder.decode(value);
+          var lines = chunk.split('\n');
+
+          for (var line of lines) {
+            if (line.startsWith('data: ')) {
+              var data = line.slice(6);
+              if (data === '[DONE]') {
+                break;
+              }
+
+              try {
+                var json = JSON.parse(data);
+                if (json.content) {
+                  fullReply += json.content;
+                  streamingContent.innerHTML = marked.parse(fullReply);
+                  container.scrollTop = container.scrollHeight;
+                }
+              } catch (e) {
+                // 忽略解析错误
+              }
+            }
+          }
+        }
+
+        // 保存回复到历史
+        chatHistory[mode].push({ role: 'assistant', content: fullReply });
+        currentBotDiv = null;
+        currentAbortController = null;
+
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          // 用户打断了，不需要显示错误
+        } else {
+          removeTyping(mode);
+          addBot(container, mode, '\u7f51\u7edc\u8fde\u63a5\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u540e\u91cd\u8bd5\u3002');
           chatHistory[mode].pop();
         }
-      } catch (err) {
-        removeTyping(mode);
-        addBot(container, mode, '\u7f51\u7edc\u8fde\u63a5\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u540e\u91cd\u8bd5\u3002');
-        chatHistory[mode].pop();
+        currentBotDiv = null;
+        currentAbortController = null;
       }
 
       sending[mode] = false;
